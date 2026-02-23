@@ -37,6 +37,7 @@
             }
         }
 
+        /* ===== PAGE TRANSITION PRO ===== */
         .page {
             width: 100vw;
             height: 100vh;
@@ -49,15 +50,35 @@
             align-items: center;
             text-align: center;
             padding: 40px;
-            transition: 1s;
-        }
-
-        .hidden {
             opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: all 0.8s cubic-bezier(.77, 0, .18, 1);
             pointer-events: none;
         }
 
-        /* ===== ปุ่มกลางจริง 100% ===== */
+        .page.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+            z-index: 2;
+        }
+
+        /* FLASH */
+        .flash {
+            position: fixed;
+            inset: 0;
+            background: white;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.6s;
+            z-index: 10;
+        }
+
+        .flash.show {
+            opacity: 0.4;
+        }
+
+        /* CENTER */
         .center-area {
             display: flex;
             justify-content: center;
@@ -66,6 +87,7 @@
             margin-top: 40px;
         }
 
+        /* BUTTON */
         .next-btn {
             padding: 16px 40px;
             border-radius: 40px;
@@ -81,30 +103,32 @@
             transform: scale(1.1);
         }
 
-        /* ===== dong ซ้ายล่าง ===== */
+        .next-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* IMAGES */
         .dong-img {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 160px;
             animation: floatImg 3s ease-in-out infinite;
-            z-index: 5;
+            z-index: 1;
         }
 
-        /* ===== kitty หน้า1 ข้างปุ่ม ===== */
         .kitty-side {
             width: 110px;
             animation: bounceKitty 2s infinite;
         }
 
-        /* ===== kitty หน้า2,3 ขวาล่าง ===== */
         .kitty-bottom {
             position: fixed;
             bottom: 0;
             right: 0;
             width: 150px;
             animation: floatImg 3s ease-in-out infinite;
-            z-index: 5;
+            z-index: 1;
         }
 
         @keyframes floatImg {
@@ -131,7 +155,7 @@
             }
         }
 
-        /* ===== กล่องข้อความ ===== */
+        /* FRAME */
         .frame {
             background: white;
             padding: 40px;
@@ -165,7 +189,7 @@
             line-height: 1.8;
         }
 
-        /* หัวใจ */
+        /* HEART */
         .heart {
             position: fixed;
             bottom: -20px;
@@ -180,7 +204,7 @@
             }
         }
 
-        /* กลิตเตอร์ */
+        /* SPARKLE */
         .sparkle {
             position: fixed;
             width: 6px;
@@ -197,10 +221,59 @@
                 transform: scale(2);
             }
         }
+
+        /* ===== MOBILE PERFECT ===== */
+        @media (max-width:768px) {
+            body {
+                overflow-x: hidden;
+            }
+
+            h1 {
+                font-size: 36px !important;
+                padding: 0 10px;
+            }
+
+            .frame {
+                max-width: 95vw;
+                padding: 25px;
+                font-size: 16px;
+                max-height: 65vh;
+            }
+
+            #typeText {
+                font-size: 17px;
+                padding: 0 15px;
+            }
+
+            .next-btn {
+                padding: 14px 28px;
+                font-size: 16px;
+            }
+
+            .dong-img {
+                width: 100px;
+            }
+
+            .kitty-bottom {
+                width: 100px;
+            }
+
+            .kitty-side {
+                width: 80px;
+            }
+
+            .dong-img,
+            .kitty-bottom {
+                opacity: 0.9;
+                pointer-events: none;
+            }
+        }
     </style>
 </head>
 
 <body>
+
+    <div class="flash" id="flash"></div>
 
     <audio id="bgMusic" loop>
         <source src="night.mp3" type="audio/mpeg">
@@ -209,8 +282,7 @@
     <img src="dong.png" class="dong-img">
 
     <!-- PAGE 1 -->
-    <div class="page" id="page1">
-
+    <div class="page active" id="page1">
         <h1 style="font-size:60px;color:#ff7ac8;text-shadow:0 0 25px white;">
             To: P'Tong 💖
         </h1>
@@ -223,30 +295,26 @@
         <div style="position:absolute;bottom:15px;left:20px;font-size:14px;color:#ff7ac8;">
             From: N'take
         </div>
-
     </div>
 
     <!-- PAGE 2 -->
-    <div class="page hidden" id="page2">
-
+    <div class="page" id="page2">
         <div class="frame">
             <div class="fade-text">6 ปีผ่านไป ไวเหมือนบะหมี่กึ่ง ล้อเล่น 🤍</div>
             <div class="fade-text">ตอนนี้สิ่งหนึ่งจบลงเเล้ว และมีอีกสิ่งที่กำลังรอให้พี่เริ่มต้นใหม่อยู่ข้างหน้า</div>
-            <div class="fade-text">ทุกก้าวที่พี่เดินผ่านมา มันไม่เคยสูญเปล่าเลย มันหล่อหลอมให้พี่เข้มแข็ง อ่อนโยน
-                และเติบโตมากกว่าที่พี่อาจจะรู้ตัวด้วยซ้ำ วันนี้แค่เป็นอีกวันหนึ่งที่พี่วางบทเก่าไว้ข้างหลัง
-                แล้วเปิดหน้ากระดาษใหม่ด้วยรอยยิ้ม</div>
-            <div class="fade-text">ออกไปพบเจอ เเละเติบโตในโลกที่กว้างกว่าเดิม ไปพบผู้คนใหม่ ๆ ประสบการณ์ใหม่ ๆ
-                และโอกาสที่รออยู่ พี่คู่ควรกับสิ่งดี ๆ เสมอ</div>
-            <div class="fade-text">สิ่งดี ๆ ที่เคยเกิดขึ้น ก็เก็บไว้ในหัวใจเป็นความทรงจำอุ่น ๆ</div>
-            <div class="fade-text">ส่วนสิ่งที่ทำให้เหนื่อย ทำให้เสียใจ ก็วางมันลงบ้าง ไม่ต้องแบกไปทุกที่
-                ชีวิตไม่จำเป็นต้องหนักตลอดเวลา</div>
-            <div class="fade-text">อย่าเร่งรีบให้ตัวเองต้องสำเร็จในทันที ทุกอย่างมีจังหวะของมัน</div>
-            <div class="fade-text">อย่ากดดันตัวเองมากเกินไป และอย่าลืมว่า การพักบ้างไม่ใช่ความอ่อนแอ</div>
-            <div class="fade-text">ถ้าวันไหนรู้สึกกลัวอนาคต ก็แค่หายใจลึก ๆ แล้วบอกตัวเองว่า ที่ผ่านมาได้
-                ครั้งนี้ก็จะผ่านไปได้เหมือนกัน</div>
-            <div class="fade-text">รักตัวเองให้มาก เลือกสิ่งที่ดีที่สุดให้ชีวิต</div>
-            <div class="fade-text">ใครที่ไม่เห็นคุณค่าพี่ ก็ปล่อยเขาไป</div>
-            <div class="fade-text">แต่จำไว้นะ ยังมีคนรอบตัวที่รักและหวังดีกับพี่เสมอ 💗</div>
+            <div class="fade-text">ทุกก้าวที่ผ่านมาไม่เคยเสียเปล่าเลย
+                ทั้งรอยยิ้มและคราบน้ำตา
+                ล้วนหล่อหลอมให้พี่เข้มแข็งขึ้น อ่อนโยนขึ้น และเติบโตขึ้นโดยที่บางทีพี่อาจยังไม่ทันสังเกตด้วยซ้ำ</div>
+            <div class="fade-text">ถึงเวลาวางเรื่องราวบทเดิมไว้เบื้องหลัง
+                แล้วเริ่มต้นหน้าใหม่ด้วยหัวใจที่มั่นคงกว่าเดิม</div>
+            <div class="fade-text">ออกไปเจอโลกที่กว้างขึ้น
+                เจอผู้คนใหม่ ๆ ประสบการณ์ใหม่ ๆ
+                และโอกาสที่กำลังรอให้พี่คว้ามันไว้
+                เพราะพี่คู่ควรกับสิ่งดี ๆ เสมอมา</div>
+            <div class="fade-text">รักตัวเองให้มาก
+                เลือกสิ่งที่ดีที่สุดให้ชีวิต
+                และอย่าลืมว่า
+                ยังมีคนที่รักและหวังดีกับพี่เสมอ 🩷</div>
         </div>
 
         <div class="center-area">
@@ -254,11 +322,10 @@
         </div>
 
         <img src="kitty.png" class="kitty-bottom">
-
     </div>
 
     <!-- PAGE 3 -->
-    <div class="page hidden" id="page3">
+    <div class="page" id="page3">
         <div id="typeText"></div>
         <img src="kitty.png" class="kitty-bottom">
     </div>
@@ -268,26 +335,33 @@
         let i = 0;
 
         function nextPage(page) {
-            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-            document.getElementById('page' + page).classList.remove('hidden');
+            const flash = document.getElementById("flash");
+            flash.classList.add("show");
 
-            if (!musicStarted) {
-                document.getElementById("bgMusic").play().catch(() => { });
-                musicStarted = true;
-            }
+            setTimeout(() => {
+                document.querySelectorAll('.page').forEach(p => p.classList.remove("active"));
+                document.getElementById('page' + page).classList.add("active");
+                flash.classList.remove("show");
 
-            if (page === 2) {
-                document.querySelectorAll('.fade-text').forEach((el, index) => {
-                    setTimeout(() => el.classList.add('show'), index * 1000);
-                });
-            }
+                if (!musicStarted) {
+                    document.getElementById("bgMusic").play().catch(() => { });
+                    musicStarted = true;
+                }
 
-            if (page === 3) {
-                startTyping();
-            }
+                if (page === 2) {
+                    document.querySelectorAll('.fade-text').forEach((el, index) => {
+                        el.classList.remove("show");
+                        setTimeout(() => el.classList.add('show'), index * 900);
+                    });
+                }
+
+                if (page === 3) {
+                    startTyping();
+                }
+
+            }, 400);
         }
 
-        /* ===== ข้อความเดิม ไม่แก้แม้แต่ตัวเดียว ===== */
         const text = `วันนี้บางอย่างได้เดินทางมาถึงปลายทางของมันแล้ว
 และข้างหน้าก็มีประตูบานใหม่รอให้พี่เปิดด้วยมือของตัวเอง
 
@@ -322,7 +396,6 @@
             typing();
         }
 
-        /* หัวใจลอย */
         setInterval(() => {
             let heart = document.createElement("div");
             heart.className = "heart";
@@ -332,7 +405,6 @@
             setTimeout(() => heart.remove(), 6000);
         }, 800);
 
-        /* กลิตเตอร์ */
         document.addEventListener("mousemove", e => {
             let s = document.createElement("div");
             s.className = "sparkle";
